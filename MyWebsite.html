@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Saad Mirza — Mechatronics Engineer</title>
+<meta name="description" content="Saad Mirza — Mechatronics Engineering student at Toronto Metropolitan University. Mechanical design, reverse engineering, and systems thinking applied to real infrastructure and mobility problems." />
+<meta name="theme-color" content="#0a0e14" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Saad Mirza — Mechatronics Engineer" />
+<meta property="og:description" content="Portfolio &amp; résumé — mechanical design, reverse engineering, and infrastructure data analysis." />
+<meta property="og:type" content="website" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0e14'/%3E%3Ctext x='50' y='68' font-size='54' font-family='Arial, sans-serif' font-weight='700' fill='%2334d399' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* ===========================================================
+     0. Design tokens
+     =========================================================== */
+  :root{
+    --bg:            #090c11;
+    --bg-soft:       #0d1118;
+    --surface:       #12171f;
+    --surface-2:     #1a212b;
+    --border:        #232b37;
+    --border-soft:   #1b222c;
+
+    --text:          #e7edf4;
+    --text-dim:      #96a2b3;
+    --text-faint:    #5c6779;
+
+    --accent:        #34d399;
+    --accent-dim:    #1f8f68;
+    --accent-soft:   rgba(52,211,153,0.12);
+    --accent-2:      #38bdf8;
+
+    --danger:        #f87171;
+
+    --radius-sm:     8px;
+    --radius-md:     14px;
+    --radius-lg:     22px;
+
+    --shadow-card:   0 1px 2px rgba(0,0,0,0.4), 0 12px 32px -12px rgba(0,0,0,0.55);
+
+    --ff-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --ff-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --maxw: 1120px;
+    --nav-h: 72px;
+  }
+
+  /* ===========================================================
+     1. Reset
+     =========================================================== */
+  *, *::before, *::after{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 12px); }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--ff-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img{ max-width: 100%; display:block; }
+  a{ color: inherit; text-decoration: none; }
+  ul{ list-style: none; }
+  button{ font: inherit; cursor: pointer; }
+  ::selection{ background: var(--accent); color: #05130d; }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+
+  /* subtle background grid, nothing flashy */
+  body::before{
+    content:"";
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--border-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent 700px);
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  section{ position: relative; z-index: 1; }
+
+  /* ===========================================================
+     2. Layout helpers
+     =========================================================== */
+  .eyebrow{
+    display:inline-block;
+    font-family: var(--ff-mono);
+    font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .eyebrow::before{ content:"// "; color: var(--text-faint); }
+
+  h1,h2,h3,h4{ font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
+  .section-head{ max-width: 640px; margin-bottom: 46px; }
+  .section-head h2{ font-size: clamp(28px, 4vw, 38px); margin: 14px 0 12px; }
+  .section-head p{ color: var(--text-dim); font-size: 16px; }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding: 12px 22px; border-radius: 999px; font-weight: 600; font-size: 14.5px;
+    border: 1px solid transparent; transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    white-space: nowrap;
+  }
+  .btn-primary{ background: var(--accent); color: #04170f; box-shadow: 0 8px 24px -8px rgba(52,211,153,0.55); }
+  .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 14px 32px -10px rgba(52,211,153,0.65); }
+  .btn-ghost{ background: transparent; color: var(--text); border-color: var(--border); }
+  .btn-ghost:hover{ border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .btn-sm{ padding: 8px 16px; font-size: 13px; }
+
+  .card{
+    background: linear-gradient(180deg, var(--surface), var(--bg-soft));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+
+  .tag{
+    font-family: var(--ff-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .reveal{ opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+  .stagger > *{ transition-delay: calc(var(--i, 0) * 70ms); }
+
+  /* ===========================================================
+     3. Nav
+     =========================================================== */
+  header{
+    position: fixed; top:0; left:0; right:0; z-index: 100;
+    height: var(--nav-h);
+    display:flex; align-items:center;
+    backdrop-filter: blur(14px) saturate(140%);
+    background: rgba(9,12,17,0.72);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  header .wrap{ display:flex; align-items:center; justify-content:space-between; width:100%; }
+
+  .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:17px; }
+  .brand .mark{
+    width:34px; height:34px; border-radius: 9px;
+    display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color:#04170f; font-family: var(--ff-mono); font-weight:800; font-size:14px;
+  }
+
+  nav.links{ display:flex; align-items:center; gap:4px; }
+  nav.links a{
+    padding: 9px 14px; border-radius: 999px; font-size: 14px; color: var(--text-dim);
+    transition: color .15s ease, background .15s ease;
+  }
+  nav.links a:hover{ color: var(--text); background: var(--surface-2); }
+  nav.links a.active{ color: var(--accent); background: var(--accent-soft); }
+
+  .nav-actions{ display:flex; align-items:center; gap:10px; }
+
+  .burger{ display:none; width:38px; height:38px; border-radius:9px; border:1px solid var(--border); background: var(--surface); align-items:center; justify-content:center; }
+  .burger span, .burger span::before, .burger span::after{
+    content:""; display:block; width:16px; height:2px; background: var(--text); position:relative; transition: all .2s ease;
+  }
+  .burger span::before{ position:absolute; top:-6px; }
+  .burger span::after{ position:absolute; top:6px; }
+  .burger.open span{ background: transparent; }
+  .burger.open span::before{ top:0; transform: rotate(45deg); }
+  .burger.open span::after{ top:0; transform: rotate(-45deg); }
+
+  .mobile-panel{
+    position: fixed; top: var(--nav-h); left:0; right:0; z-index:99;
+    background: var(--bg-soft); border-bottom: 1px solid var(--border);
+    display:flex; flex-direction:column; padding: 8px 20px 18px;
+    transform: translateY(-8px); opacity:0; pointer-events:none; transition: all .2s ease;
+  }
+  .mobile-panel.open{ transform: translateY(0); opacity:1; pointer-events:auto; }
+  .mobile-panel a{ padding: 13px 4px; border-bottom: 1px solid var(--border-soft); color: var(--text-dim); font-size:15px; }
+  .mobile-panel a:last-child{ border-bottom:none; }
+
+  @media (max-width: 860px){
+    nav.links{ display:none; }
+    .burger{ display:flex; }
+    .nav-actions .btn-ghost{ display:none; }
+  }
+
+  /* ===========================================================
+     4. Hero
+     =========================================================== */
+  .hero{
+    min-height: 92vh;
+    display:flex; align-items:center;
+    padding-top: var(--nav-h);
+  }
+  .hero-grid{ max-width: 720px; padding: 70px 0 60px; }
+  @media (max-width: 900px){ .hero-grid{ padding-top: 40px; } }
+
+  .hero h1{ font-size: clamp(34px, 5.5vw, 54px); line-height: 1.1; margin: 20px 0 18px; }
+  .hero h1 .grad{ color: var(--accent); }
+  .hero p.lead{ font-size: 17px; color: var(--text-dim); max-width: 560px; margin-bottom: 30px; }
+  .hero .actions{ display:flex; gap: 14px; flex-wrap: wrap; margin-bottom: 34px; }
+
+  .hero-meta{ display:flex; flex-wrap:wrap; gap: 18px 26px; font-size: 13.5px; color: var(--text-faint); font-family: var(--ff-mono); }
+  .hero-meta span{ display:flex; align-items:center; gap:7px; }
+  .hero-meta svg{ width:15px; height:15px; stroke: var(--accent); flex-shrink:0; }
+
+  .scroll-cue{ position:absolute; bottom: 26px; left:50%; transform: translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; color: var(--text-faint); font-family: var(--ff-mono); font-size:11px; letter-spacing:.1em; }
+  .scroll-cue .line{ width:1px; height: 34px; background: linear-gradient(var(--accent), transparent); animation: pulse-line 1.8s ease-in-out infinite; }
+  @keyframes pulse-line{ 0%,100%{ opacity:.3; } 50%{ opacity:1; } }
+  @media (max-width: 900px){ .scroll-cue{ display:none; } }
+
+  /* ===========================================================
+     5. About
+     =========================================================== */
+  .about{ padding: 110px 0 40px; }
+  .about-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap: 40px; }
+  @media (max-width: 860px){ .about-grid{ grid-template-columns: 1fr; } }
+  .about-copy p{ color: var(--text-dim); margin-bottom: 16px; font-size: 15.5px; }
+  .about-copy strong{ color: var(--text); font-weight: 600; }
+
+  .quals{ padding: 22px; }
+  .quals h3{ font-size: 15px; margin-bottom: 16px; color: var(--accent); font-family: var(--ff-mono); text-transform: uppercase; letter-spacing: .06em; }
+  .quals ul{ display:flex; flex-direction:column; gap: 12px; }
+  .quals li{ display:flex; gap: 10px; font-size: 14px; color: var(--text-dim); align-items:flex-start; }
+  .quals li svg{ width:16px; height:16px; stroke: var(--accent); flex-shrink:0; margin-top:2px; }
+
+  .cert-row{ display:flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
+  .cert-pill{ display:flex; align-items:center; gap:8px; background: var(--surface-2); border:1px solid var(--border); padding: 8px 12px; border-radius: 10px; font-size: 12.5px; color: var(--text-dim); }
+  .cert-pill svg{ width:14px; height:14px; stroke: var(--accent-2); }
+
+  /* ===========================================================
+     6. Experience timeline
+     =========================================================== */
+  .experience{ padding: 90px 0; }
+  .timeline{ position: relative; padding-left: 32px; }
+  .timeline::before{ content:""; position:absolute; left:6px; top:6px; bottom:6px; width:1px; background: linear-gradient(var(--accent), var(--border) 90%); }
+
+  .tl-item{ position: relative; padding-bottom: 40px; }
+  .tl-item:last-child{ padding-bottom: 0; }
+  .tl-dot{ position:absolute; left: -32px; top: 4px; width:13px; height:13px; border-radius:50%; background: var(--bg); border: 2px solid var(--accent); }
+  .tl-item.current .tl-dot{ background: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }
+
+  .tl-card{ padding: 22px 24px; }
+  .tl-top{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap: 8px 16px; margin-bottom: 6px; }
+  .tl-role{ font-size: 17px; font-weight: 700; }
+  .tl-date{ font-family: var(--ff-mono); font-size: 12.5px; color: var(--accent); white-space: nowrap; }
+  .tl-org{ color: var(--text-dim); font-size: 14px; margin-bottom: 12px; display:flex; align-items:center; gap:8px; }
+  .badge-current{ font-family: var(--ff-mono); font-size: 10.5px; letter-spacing:.05em; text-transform:uppercase; color: var(--accent); background: var(--accent-soft); border:1px solid rgba(52,211,153,.3); padding: 2px 8px; border-radius:999px; }
+  .tl-list{ display:flex; flex-direction:column; gap:8px; }
+  .tl-list li{ position:relative; padding-left: 18px; font-size: 14px; color: var(--text-dim); }
+  .tl-list li::before{ content:"›"; position:absolute; left:0; top:0; color: var(--accent); font-weight:700; }
+
+  /* ===========================================================
+     7. Projects
+     =========================================================== */
+  .projects{ padding: 90px 0; }
+  .filters{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom: 34px; }
+  .filter-btn{
+    padding: 9px 18px; border-radius: 999px; border:1px solid var(--border); background: var(--surface);
+    color: var(--text-dim); font-size: 13.5px; font-weight:600; transition: all .18s ease;
+  }
+  .filter-btn:hover{ color: var(--text); border-color: var(--accent-2); }
+  .filter-btn.active{ background: var(--accent); color:#04170f; border-color: var(--accent); }
+
+  .project-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  @media (max-width: 860px){ .project-grid{ grid-template-columns: 1fr; } }
+
+  .proj-card{
+    padding: 26px; display:flex; flex-direction:column; gap: 14px;
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .proj-card:hover{ transform: translateY(-5px); border-color: rgba(52,211,153,0.4); box-shadow: 0 24px 50px -24px rgba(0,0,0,0.65); }
+  .proj-card.hidden-card{ display:none; }
+
+  .proj-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .proj-icon{
+    width: 44px; height:44px; border-radius: 12px; display:flex; align-items:center; justify-content:center;
+    background: var(--surface-2); border:1px solid var(--border); font-size:20px; flex-shrink:0;
+  }
+  .proj-title{ font-size: 18px; font-weight:700; margin-bottom:4px; }
+  .proj-sub{ font-size: 12.5px; color: var(--text-faint); font-family: var(--ff-mono); }
+  .proj-desc{ color: var(--text-dim); font-size: 14.5px; }
+
+  .proj-list{ display:flex; flex-direction:column; gap:7px; margin: 2px 0 4px; }
+  .proj-list li{ position:relative; padding-left:16px; font-size: 13.5px; color: var(--text-dim); }
+  .proj-list li::before{ content:"—"; position:absolute; left:0; color: var(--accent-dim); }
+
+  .proj-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top: auto; padding-top: 10px; }
+
+  /* ===========================================================
+     8. Skills
+     =========================================================== */
+  .skills{ padding: 90px 0; }
+  .skills-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 860px){ .skills-grid{ grid-template-columns: 1fr; } }
+  .skill-card{ padding: 26px; }
+  .skill-card h3{ font-size: 15px; color: var(--accent); margin-bottom: 18px; font-family: var(--ff-mono); text-transform: uppercase; letter-spacing:.05em; display:flex; align-items:center; gap:8px; }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap:9px; }
+  .skill-tags .tag{ padding: 7px 13px; font-size: 12.5px; }
+  .skill-tags .tag:hover{ border-color: var(--accent); color: var(--text); }
+
+  /* ===========================================================
+     9. Education
+     =========================================================== */
+  .education{ padding: 90px 0; }
+  .edu-card{ padding: 32px; display:flex; justify-content:space-between; align-items:center; gap: 24px; flex-wrap:wrap; }
+  .edu-left{ display:flex; gap: 18px; align-items:flex-start; }
+  .edu-icon{ width:52px; height:52px; border-radius:14px; background: var(--accent-soft); border:1px solid rgba(52,211,153,.3); display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+  .edu-left h3{ font-size:19px; margin-bottom:4px; }
+  .edu-left p{ color: var(--text-dim); font-size:14.5px; }
+  .edu-date{ font-family: var(--ff-mono); font-size:13px; color: var(--accent); white-space:nowrap; }
+
+  /* ===========================================================
+     10. Contact
+     =========================================================== */
+  .contact{ padding: 90px 0 60px; }
+  .contact-card{ padding: 48px; text-align:center; display:flex; flex-direction:column; align-items:center; }
+  @media (max-width: 860px){ .contact-card{ padding: 32px; } }
+
+  .contact-card h2{ font-size: 28px; margin-bottom: 12px; }
+  .contact-card > p{ color: var(--text-dim); font-size: 15px; margin-bottom: 30px; max-width: 480px; }
+  .contact-methods{ display:flex; flex-wrap:wrap; justify-content:center; gap: 12px; }
+  .contact-methods a, .contact-methods .cm-static{
+    display:flex; align-items:center; gap: 10px; font-size: 14.5px; color: var(--text-dim);
+    padding: 12px 18px; border: 1px solid var(--border); border-radius: 999px; transition: all .15s ease;
+  }
+  .contact-methods a:hover{ color: var(--accent); border-color: var(--accent); }
+  .contact-methods svg{ width:16px; height:16px; stroke: var(--accent); flex-shrink:0; }
+
+  /* ===========================================================
+     11. Footer
+     =========================================================== */
+  footer{ border-top: 1px solid var(--border-soft); padding: 34px 0; }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  footer p{ color: var(--text-faint); font-size: 13px; }
+  footer .fsocial{ display:flex; gap:14px; }
+  footer .fsocial a{ width:36px; height:36px; border-radius:10px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color: var(--text-dim); transition: all .15s ease; }
+  footer .fsocial a:hover{ color: var(--accent); border-color: var(--accent); }
+  footer .fsocial svg{ width:16px; height:16px; }
+
+  /* back to top */
+  .fab{
+    position: fixed; right: 22px; bottom: 22px; width: 46px; height:46px; border-radius: 50%;
+    background: var(--surface-2); border:1px solid var(--border); color: var(--text);
+    display:flex; align-items:center; justify-content:center; z-index: 90;
+    opacity:0; pointer-events:none; transform: translateY(10px); transition: all .25s ease;
+    box-shadow: var(--shadow-card);
+  }
+  .fab.show{ opacity:1; pointer-events:auto; transform: translateY(0); }
+  .fab:hover{ border-color: var(--accent); color: var(--accent); }
+
+  /* generic section top divider glow */
+  .divider{ height:1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<header>
+  <div class="wrap">
+    <a href="#top" class="brand"><span class="mark">SM</span> Saad Mirza</a>
+
+    <nav class="links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+  <a href="#about">About</a>
+  <a href="#experience">Experience</a>
+  <a href="#projects">Projects</a>
+  <a href="#skills">Skills</a>
+  <a href="#education">Education</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <span class="eyebrow reveal in">Open to internships &amp; new-grad roles</span>
+    <h1 class="reveal in">Mechatronics engineer<br>building <span class="grad">real, physical</span> solutions.</h1>
+    <p class="lead reveal in">
+      I turn open-ended problems into clear, well-reasoned engineering solutions —
+      from municipal infrastructure data to mobility systems, structural design, and
+      reverse-engineered hardware. Fundamentals first, practicality always.
+    </p>
+    <div class="actions reveal in">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    </div>
+    <div class="hero-meta reveal in">
+      <span><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Markham, ON</span>
+      <span><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.42A12.02 12.02 0 0121 12c0 3.5-2 6.5-9 9-7-2.5-9-5.5-9-9 0-.83.13-1.63.34-2.42L12 14z"/></svg> Mechatronics Eng., TMU</span>
+      <span><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Currently: Engineering Intern, City of Vaughan</span>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ============================================================
+     ABOUT
+============================================================ -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">About</span>
+      <h2>Fundamentals, practicality, real-world constraints.</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <p>
+          I'm a <strong>Mechatronics Engineering</strong> student at <strong>Toronto Metropolitan University</strong>,
+          detail-oriented and hands-on across construction, operations, and product design. I like turning
+          open-ended problems into clear, well-reasoned engineering solutions — understanding not just
+          <em>what</em> a system does, but <em>why</em> it was designed that way.
+        </p>
+        <p>
+          My experience spans reviewing engineering drawings and maintaining data for <strong>800+ municipal assets</strong>
+          at the City of Vaughan, building Excel-based reporting dashboards that improved efficiency by
+          <strong>18%</strong>, and running independent mechanical design projects — from a custom motorized
+          vehicle to a heated snow-removal shovel modeled in Fusion 360.
+        </p>
+        <p>
+          I'm particularly drawn to <strong>mobility systems</strong>, <strong>resilient design</strong>, and
+          <strong>assistive technology</strong>, where good engineering directly improves usability and safety.
+        </p>
+      </div>
+
+      <div class="quals card">
+        <h3>Snapshot</h3>
+        <ul>
+          <li><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Proficient in Python, MATLAB, Java, C/C++, JavaScript, R</li>
+          <li><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> SolidWorks, Fusion 360, AutoCAD, LabVIEW, GD&amp;T</li>
+          <li><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Mechanical design, circuit analysis, systems thinking</li>
+          <li><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Strong technical writing &amp; analytical reporting</li>
+          <li><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> High attention to detail under demanding timelines</li>
+        </ul>
+        <div class="cert-row">
+          <span class="cert-pill"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> WHMIS Certified (2024)</span>
+          <span class="cert-pill"><svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> National Lifeguard Certified</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EXPERIENCE
+============================================================ -->
+<section class="experience" id="experience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Experience</span>
+      <h2>Where I've put engineering &amp; analysis to work.</h2>
+      <p>Four roles across municipal infrastructure, construction data, and community operations.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item current reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card card">
+          <div class="tl-top">
+            <span class="tl-role">Engineering Intern</span>
+            <span class="tl-date">May 2026 – Sep 2026</span>
+          </div>
+          <div class="tl-org">City of Vaughan · Vaughan, ON <span class="badge-current">Current</span></div>
+          <ul class="tl-list">
+            <li>Conducted site inspections, field data collection, and prepared engineering documentation supporting municipal infrastructure initiatives.</li>
+            <li>Reviewed 25+ engineering drawings, construction records, and technical reports for compliance with municipal standards.</li>
+            <li>Analyzed and maintained data for 800+ municipal assets using Excel and asset management systems.</li>
+            <li>Collaborated with engineers, contractors, and cross-functional departments to monitor project progress.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item current reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card card">
+          <div class="tl-top">
+            <span class="tl-role">Program Coordinator</span>
+            <span class="tl-date">June 2023 – Present</span>
+          </div>
+          <div class="tl-org">YMCA of Greater Toronto · Markham, ON <span class="badge-current">Current</span></div>
+          <ul class="tl-list">
+            <li>Planned and delivered daily recreational and sports programs for 30+ children aged 3–15.</li>
+            <li>Supported facility operations and promoted programs, consistently meeting monthly participation targets.</li>
+            <li>Assisted with program scheduling, service coordination, and member engagement.</li>
+            <li>Developed specialized youth programs in alignment with organizational guidelines.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card card">
+          <div class="tl-top">
+            <span class="tl-role">Senior Lifeguard</span>
+            <span class="tl-date">May 2025 – Sep 2025</span>
+          </div>
+          <div class="tl-org">Jadaco Recreation Management · North York, ON</div>
+          <ul class="tl-list">
+            <li>Supervised and mentored lifeguards on safety regulations, emergency procedures, and facility policy.</li>
+            <li>Led emergency response efforts, performed rescues and first aid, documented incidents accurately.</li>
+            <li>Coordinated staff scheduling, pool operations, and daily safety checks.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card card">
+          <div class="tl-top">
+            <span class="tl-role">Junior Data Analyst</span>
+            <span class="tl-date">Sep 2022 – Feb 2024</span>
+          </div>
+          <div class="tl-org">Wardah Designers and Builders Inc. · Toronto, ON</div>
+          <ul class="tl-list">
+            <li>Analyzed project cost, scheduling, and construction data across 8+ active project files.</li>
+            <li>Built and maintained Excel dashboards tracking budgets, timelines, and material usage.</li>
+            <li>Cleaned and organized data, improving overall reporting efficiency by 18%.</li>
+            <li>Prepared summaries and documentation supporting management decision-making.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROJECTS
+============================================================ -->
+<section class="projects" id="projects">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Projects</span>
+      <h2>Seven projects. Mechanical design to embedded logic.</h2>
+      <p>Personal builds, reverse-engineering studies, and coursework spanning mechanical, software, and systems-analysis work.</p>
+    </div>
+
+    <div class="filters reveal">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="mech">Mechanical Design</button>
+      <button class="filter-btn" data-filter="soft">Software &amp; Robotics</button>
+      <button class="filter-btn" data-filter="research">Research &amp; Analysis</button>
+    </div>
+
+    <div class="project-grid" id="projectGrid">
+
+      <!-- MHRC -->
+      <article class="proj-card card reveal" data-cat="mech">
+        <div class="proj-top">
+          <div>
+            <div class="proj-title">Mobile Hail-Resistant Camper (MHRC)</div>
+            <div class="proj-sub">MEC325 · Fall 2025 · Mechanical Design / Structural Analysis</div>
+          </div>
+          <div class="proj-icon">🏕️</div>
+        </div>
+        <p class="proj-desc">A human-powered, weather-resistant mobile shelter designed for individuals displaced by extreme weather and post-disaster conditions.</p>
+        <ul class="proj-list">
+          <li>6061-T6 aluminum triangular truss frame reinforced with bamboo–polymer composites for max stiffness at minimum weight.</li>
+          <li>Structural analysis for stability at wind speeds up to 100 km/h with a 2.5× safety factor.</li>
+          <li>Human factors design using the Cambridge Exclusion Calculator — 98% user accommodation.</li>
+          <li>Three-layer composite shell balancing impact resistance, waterproofing, and insulation.</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="tag">Structural Analysis</span><span class="tag">Human Factors</span><span class="tag">Sustainability</span>
+        </div>
+      </article>
+
+      <!-- Automotive Vehicle Adaptation -->
+      <article class="proj-card card reveal" data-cat="mech">
+        <div class="proj-top">
+          <div>
+            <div class="proj-title">Automotive Vehicle Adaptation</div>
+            <div class="proj-sub">Personal Project · Jan 2024 – Current · Mechanical &amp; Systems Design</div>
+          </div>
+          <div class="proj-icon">🚗</div>
+        </div>
+        <p class="proj-desc">Design and construction of a custom motorized vehicle, integrating mechanical, electrical, and motor-control systems into one functional platform.</p>
+        <ul class="proj-list">
+          <li>Designed and integrated components in Autodesk Fusion 360 to improve build quality and assembly accuracy.</li>
+          <li>Collaborated with a multidisciplinary team to troubleshoot the drivetrain, braking system, and motor control.</li>
+          <li>Optimized power distribution for efficient, reliable operation and ran hands-on performance testing.</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="tag">Fusion 360</span><span class="tag">Drivetrain</span><span class="tag">Motor Control</span>
+        </div>
+      </article>
+
+      <!-- Thermal Snow Removal Shovel -->
+      <article class="proj-card card reveal" data-cat="mech">
+        <div class="proj-top">
+          <div>
+            <div class="proj-title">Thermal Snow Removal Shovel</div>
+            <div class="proj-sub">Personal Project · Jan 2026 – Current · Product Design</div>
+          </div>
+          <div class="proj-icon">❄️</div>
+        </div>
+        <p class="proj-desc">An electrically heated snow shovel modeled in Fusion 360 — mechanical design meets a compact thermal system for real outdoor use.</p>
+        <ul class="proj-list">
+          <li>Integrated a 12V PTC heating system, boron steel wear strip, and 12V battery into one assembly.</li>
+          <li>Selected materials and electrical components for durability, thermal performance, and weather exposure.</li>
+          <li>Applied Design for Manufacturing (DFM) principles for parametric, production-ready geometry.</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="tag">Fusion 360</span><span class="tag">DFM</span><span class="tag">Thermal Systems</span>
+        </div>
+      </article>
+
+      <!-- Virtual Spider Quad Bot -->
+      <article class="proj-card card reveal" data-cat="soft">
+        <div class="proj-top">
+          <div>
+            <div class="proj-title">Virtual Spider Quad Bot</div>
+            <div class="proj-sub">MTE301 · Winter 2026 · C++ Simulation &amp; Algorithms</div>
+          </div>
+          <div class="proj-icon">🕷️</div>
+        </div>
+        <p class="proj-desc">A C++ / SFML simulation of a four-legged robot navigating a 60×40 grid — real-time gait logic, obstacle avoidance, and simulated LiDAR sensing.</p>
+        <ul class="proj-list">
+          <li>Scored movement algorithm weighing goal distance, LiDAR clearance, and visit history each step.</li>
+          <li>Simulated LiDAR returning free-cell clearance ahead, used as a safety factor in the score.</li>
+          <li>Visit-penalty anti-looping system with automatic reset after 35 stuck steps.</li>
+          <li>Modular three-file architecture (utils / render / spider) — debugged three step-ordering bugs.</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="tag">C++</span><span class="tag">SFML</span><span class="tag">Heuristic Scoring</span><span class="tag">Debugging</span>
+        </div>
+      </article>
+
+      <!-- Sunu Band -->
+      <article class="proj-card card reveal" data-cat="research">
+        <div class="proj-top">
+          <div>
+            <div class="proj-title">Reverse Engineering &amp; Redesign — Sunu Band V2</div>
+            <div class="proj-sub">CEN100 · Fall 2024 · Accessibility / Assistive Tech</div>
+          </div>
+          <div class="proj-icon">🦯</div>
+        </div>
+        <p class="proj-desc">Reverse-engineered a wearable navigation aid for visually impaired users and proposed a next-generation redesign.</p>
+        <ul class="proj-list">
+          <li>Full product teardown identifying limits in durability, sensing range, and environmental robustness.</li>
+          <li>Redesigned housing concept emphasizing waterproofing, impact resistance, and ergonomics.</li>
+          <li>Proposed LiDAR + ultrasonic sensing with AI-based object recognition for obstacle detection.</li>
+          <li>Added Braille-labeled controls and customizable haptic feedback profiles.</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="tag">Reverse Engineering</span><span class="tag">Assistive Tech</span><span class="tag">Accessibility</span>
+        </div>
+      </article>
+
+      <!-- Apollo 13 -->
+      <article class="proj-card card reveal" data-cat="research">
+        <div class="proj-top">
+          <div>
+            <div class="proj-title">Apollo 13 Mission Failure Analysis</div>
+            <div class="proj-sub">MEC100 · Fall 2024 · Failure Analysis &amp; Ethics</div>
+          </div>
+          <div class="proj-icon">🚀</div>
+        </div>
+        <p class="proj-desc">A full engineering failure analysis of the Apollo 13 oxygen tank explosion and the cascading system failures that followed.</p>
+        <ul class="proj-list">
+          <li>Traced the root cause to damaged wiring insulation from pre-flight handling, causing overheating and rupture.</li>
+          <li>Mapped the cascade from tank failure → power loss → life-support degradation → navigation limits.</li>
+          <li>Evaluated NASA's crisis response through a systems-engineering and risk-management lens.</li>
+          <li>Analyzed the engineering-ethics dimension of the testing and design assumptions involved.</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="tag">Failure Analysis</span><span class="tag">Risk Assessment</span><span class="tag">Technical Writing</span>
+        </div>
+      </article>
+
+      <!-- Thermal Imaging Scanner -->
+      <article class="proj-card card reveal" data-cat="research">
+        <div class="proj-top">
+          <div>
+            <div class="proj-title">Thermal Imaging Scanner — Reverse Engineering</div>
+            <div class="proj-sub">CEN100 · Fall 2024 · System Analysis / CAD</div>
+          </div>
+          <div class="proj-icon">🌡️</div>
+        </div>
+        <p class="proj-desc">Reverse-engineered a thermal imaging scanner used for elevated-temperature screening during COVID-19, and proposed cost-optimized alternatives.</p>
+        <ul class="proj-list">
+          <li>Structured teardown of sensor, signal conditioning, processing, power supply, and display interface.</li>
+          <li>Evaluated component alternatives for cost, availability, and manufacturability.</li>
+          <li>Produced detailed AutoCAD drawings of system layout and component placement.</li>
+          <li>Presented findings on assembly, maintenance, and high-throughput screening suitability.</li>
+        </ul>
+        <div class="proj-tags">
+          <span class="tag">AutoCAD</span><span class="tag">Cost Optimization</span><span class="tag">System Design</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SKILLS
+============================================================ -->
+<section class="skills" id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Skills</span>
+      <h2>Tools I reach for.</h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card card reveal">
+        <h3>⚙ Technical</h3>
+        <div class="skill-tags">
+          <span class="tag">SolidWorks</span><span class="tag">Mechanical Design</span><span class="tag">GD&amp;T</span>
+          <span class="tag">Fusion 360</span><span class="tag">Tinkercad</span><span class="tag">Robotics</span>
+          <span class="tag">Technical Drawings</span><span class="tag">LabVIEW</span><span class="tag">AutoCAD</span>
+        </div>
+      </div>
+      <div class="skill-card card reveal">
+        <h3>🖥 Software &amp; Tools</h3>
+        <div class="skill-tags">
+          <span class="tag">Excel</span><span class="tag">Power BI</span><span class="tag">PowerPoint</span>
+          <span class="tag">Word</span><span class="tag">GIS</span><span class="tag">Outlook</span>
+          <span class="tag">Teams</span><span class="tag">SharePoint</span>
+        </div>
+      </div>
+      <div class="skill-card card reveal">
+        <h3>&lt;/&gt; Programming &amp; Data</h3>
+        <div class="skill-tags">
+          <span class="tag">Java</span><span class="tag">Python</span><span class="tag">C / C++</span>
+          <span class="tag">MATLAB</span><span class="tag">JavaScript</span><span class="tag">HTML / CSS</span>
+          <span class="tag">R</span><span class="tag">Replit</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EDUCATION
+============================================================ -->
+<section class="education" id="education">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Education</span>
+      <h2>Foundations.</h2>
+    </div>
+
+    <div class="edu-card card reveal">
+      <div class="edu-left">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <h3>Bachelor of Engineering, Mechatronics Engineering</h3>
+          <p>Toronto Metropolitan University · Toronto, ON</p>
+        </div>
+      </div>
+      <div class="edu-date">Sep 2024 – May 2028</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+============================================================ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-card card reveal">
+      <span class="eyebrow">Contact</span>
+      <h2 style="margin-top:14px;">Let's talk engineering.</h2>
+      <p>Open to internships, co-ops, and new-grad opportunities in mechanical, mechatronics, or infrastructure engineering.</p>
+
+      <div class="contact-methods">
+        <a href="mailto:saadmirza2324@gmail.com">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          saadmirza2324@gmail.com
+        </a>
+        <a href="tel:+16478253634">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          (647) 825-3634
+        </a>
+        <span class="cm-static">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Markham, Ontario, Canada
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="wrap">
+    <p>© <span id="year"></span> Saad Mirza. Built from scratch — no templates.</p>
+    <div class="fsocial">
+      <a href="mailto:saadmirza2324@gmail.com" aria-label="Email">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      </a>
+      <a href="tel:+16478253634" aria-label="Phone">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<button class="fab" id="fab" aria-label="Back to top">
+  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Year ---------- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---------- Mobile nav ---------- */
+  var burger = document.getElementById('burger');
+  var panel = document.getElementById('mobilePanel');
+  burger.addEventListener('click', function(){
+    var open = panel.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+  });
+  panel.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      panel.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', false);
+    });
+  });
+
+  /* ---------- Scroll-spy active nav link ---------- */
+  var sections = ['about','experience','projects','skills','education','contact'];
+  var navLinks = document.querySelectorAll('nav.links a');
+  var byHash = {};
+  navLinks.forEach(function(a){ byHash[a.getAttribute('href').slice(1)] = a; });
+
+  var spyObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var id = entry.target.id;
+      if(entry.isIntersecting && byHash[id]){
+        navLinks.forEach(function(a){ a.classList.remove('active'); });
+        byHash[id].classList.add('active');
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+  sections.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) spyObserver.observe(el);
+  });
+
+  /* ---------- Reveal on scroll ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry, i){
+      if(entry.isIntersecting){
+        entry.target.style.setProperty('--i', i);
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(function(el){ revealObserver.observe(el); });
+
+  /* ---------- Project filters ---------- */
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  var projectCards = document.querySelectorAll('.proj-card');
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.getAttribute('data-filter');
+      projectCards.forEach(function(card){
+        var match = (f === 'all' || card.getAttribute('data-cat') === f);
+        card.classList.toggle('hidden-card', !match);
+      });
+    });
+  });
+
+  /* ---------- Back to top FAB ---------- */
+  var fab = document.getElementById('fab');
+  window.addEventListener('scroll', function(){
+    fab.classList.toggle('show', window.scrollY > 600);
+  }, { passive: true });
+  fab.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+})();
+</script>
+</body>
+</html>
